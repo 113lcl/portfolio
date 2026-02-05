@@ -142,6 +142,7 @@ class ContactModal {
     constructor() {
         this.modal = document.getElementById('contactModal');
         this.openBtn = document.getElementById('contactBtn');
+        this.floatingBtn = document.getElementById('floatingContactBtn');
         this.closeBtn = document.getElementById('closeModal');
         this.overlay = this.modal.querySelector('.modal-overlay');
         
@@ -150,6 +151,9 @@ class ContactModal {
 
     setupEventListeners() {
         this.openBtn.addEventListener('click', () => this.open());
+        if (this.floatingBtn) {
+            this.floatingBtn.addEventListener('click', () => this.open());
+        }
         this.closeBtn.addEventListener('click', () => this.close());
         this.overlay.addEventListener('click', () => this.close());
         

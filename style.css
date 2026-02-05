@@ -256,11 +256,110 @@ body {
     letter-spacing: -0.02em;
 }
 
+.hero-greeting {
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
 .hero-subtitle {
-    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-size: clamp(1rem, 2vw, 1.25rem);
     color: var(--text-secondary);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     font-weight: 300;
+}
+
+.hero-tech {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tech-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(139, 133, 99, 0.15);
+    border: 1px solid rgba(139, 133, 99, 0.3);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.tech-tag:hover {
+    background: rgba(139, 133, 99, 0.25);
+    border-color: var(--accent-primary);
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+}
+
+.workflow-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(139, 133, 99, 0.2);
+}
+
+.workflow-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.workflow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.workflow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 100px;
+}
+
+.step-number {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(139, 133, 99, 0.2), rgba(124, 131, 99, 0.2));
+    border: 2px solid var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--accent-primary);
+    font-size: 1.25rem;
+}
+
+.step-label {
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.workflow-arrow {
+    color: var(--accent-primary);
+    font-size: 1.5rem;
+    opacity: 0.6;
 }
 
 /* Кнопки */
@@ -280,6 +379,115 @@ body {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 50px rgba(139, 133, 99, 0.5);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: bounce 2s infinite;
+    z-index: 10;
+}
+
+.mouse-icon {
+    width: 28px;
+    height: 44px;
+    border: 2px solid var(--accent-primary);
+    border-radius: 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8px;
+    position: relative;
+}
+
+.mouse-wheel {
+    width: 3px;
+    height: 8px;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    animation: scroll-wheel 1.5s infinite;
+}
+
+.arrow-down {
+    width: 2px;
+    height: 16px;
+    background: var(--accent-primary);
+    animation: scroll-arrow 1.5s infinite;
+}
+
+@keyframes scroll-wheel {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+@keyframes scroll-arrow {
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* Floating Contact Button */
+.floating-contact-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(139, 133, 99, 0.4);
+}
+
+.floating-contact-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(139, 133, 99, 0.6);
+}
+
+.floating-contact-btn:active {
+    transform: scale(0.95);
+}
+
+.floating-contact-btn svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Портфолио */

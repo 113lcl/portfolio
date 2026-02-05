@@ -11,6 +11,13 @@
     <canvas id="particles"></canvas>
     <div class="cursor-dot" aria-hidden="true"></div>
     <div class="cursor-ring" aria-hidden="true"></div>
+    
+    <!-- Floating Contact Button -->
+    <button class="floating-contact-btn" id="floatingContactBtn" aria-label="Contact us">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </button>
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
@@ -27,10 +34,56 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Web Developer</h1>
-                <p class="hero-subtitle">Creating stylish websites and interactive projects</p>
-                <button class="btn-primary" id="contactBtn">Contact</button>
+                <h2 class="hero-greeting">Hi, I'm</h2>
+                <h1 class="hero-title">John Developer</h1>
+                <p class="hero-subtitle">Front-End Developer | Creating modern, responsive websites</p>
+                
+                <div class="hero-tech">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">React</span>
+                </div>
+
+                <p class="hero-description">
+                    I create clean, modern websites and web applications that help businesses grow their online presence. 
+                    Passionate about writing quality code and delivering projects that exceed expectations.
+                </p>
+                
+                <button class="btn-primary" id="contactBtn">Get in Touch</button>
             </div>
+
+            <div class="workflow-section">
+                <h3 class="workflow-title">How We Work</h3>
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Discuss Your Ideas</div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">See the Work</div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Make Changes</div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Ready to Launch</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse-icon">
+                <div class="mouse-wheel"></div>
+            </div>
+            <div class="arrow-down"></div>
         </div>
     </section>
 
