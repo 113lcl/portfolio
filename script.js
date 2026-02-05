@@ -2,23 +2,11 @@
 class ParticleCanvas {
     constructor() {
         this.canvas = document.getElementById('particles');
-        this.ctx = this.canvas.getContext('2d', { alpha: false });
+        this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.mouse = { x: null, y: null, radius: 150 };
-        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        this.isTablet = /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent);
-        this.screenWidth = window.innerWidth;
-        
-        // Адаптивное количество частиц
-        if (this.isMobile && this.screenWidth < 480) {
-            this.particleCount = 20;
-        } else if (this.isMobile || (this.screenWidth <= 768 && !this.isTablet)) {
-            this.particleCount = 35;
-        } else if (this.isTablet) {
-            this.particleCount = 60;
-        } else {
-            this.particleCount = 100;
-        }
+        this.isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.particleCount = this.isMobile ? 40 : 100;
         
         this.init();
         this.animate();
@@ -104,15 +92,14 @@ class ParticleCanvas {
     }
 
     connectParticles() {
-        const maxDistance = this.isMobile ? 80 : 120;
         for (let i = 0; i < this.particles.length; i++) {
             for (let j = i + 1; j < this.particles.length; j++) {
                 const dx = this.particles[i].x - this.particles[j].x;
                 const dy = this.particles[i].y - this.particles[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
-                if (distance < maxDistance) {
-                    const opacity = 1 - (distance / maxDistance);
+                if (distance < 120) {
+                    const opacity = 1 - (distance / 120);
                     this.ctx.strokeStyle = `rgba(139, 133, 99, ${opacity * 0.2})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.beginPath();
@@ -135,8 +122,8 @@ class ParticleCanvas {
             this.createParticles();
         });
 
-        // Оптимизация: только десктоп может взаимодействовать с курсором
-        if (!this.isMobile && !this.isTablet) {
+        // Только десктоп может взаимодействовать с курсором
+        if (!this.isMobile) {
             window.addEventListener('mousemove', (e) => {
                 this.mouse.x = e.x;
                 this.mouse.y = e.y;
@@ -506,36 +493,3 @@ function initCustomCursor() {
 
     animate();
 }
-
-// Адаптивная оптимизация при загрузке и изменении размера
-document.addEventListener('DOMContentLoaded', () => {
-    // Обработка изменения ориентации
-    const handleOrientationChange = () => {
-        setTimeout(() => {
-            const vh = window.innerHeight;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }, 100);
-    };
-
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', handleOrientationChange);
-    
-    // Инициальный вызов
-    handleOrientationChange();
-
-    // Отключение зума на двойной тап для мобильных
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', (e) => {
-        const now = new Date().getTime();
-        if (now - lastTouchEnd <= 300 && e.touches.length === 0) {
-            e.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, { passive: true });
-
-    // Поддержка notch на iPhone X/11/12
-    if (CSS.supports('padding-left', 'env(safe-area-inset-left)')) {
-        document.body.style.paddingLeft = 'env(safe-area-inset-left)';
-        document.body.style.paddingRight = 'env(safe-area-inset-right)';
-    }
-});
