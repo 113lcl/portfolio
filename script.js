@@ -141,7 +141,7 @@ class ParticleCanvas {
 class ContactModal {
     constructor() {
         this.modal = document.getElementById('contactModal');
-        this.openBtn = document.getElementById('contactBtn');
+        this.navContactBtn = document.getElementById('navContactBtn');
         this.floatingBtn = document.getElementById('floatingContactBtn');
         this.closeBtn = document.getElementById('closeModal');
         this.overlay = this.modal.querySelector('.modal-overlay');
@@ -150,7 +150,12 @@ class ContactModal {
     }
 
     setupEventListeners() {
-        this.openBtn.addEventListener('click', () => this.open());
+        if (this.navContactBtn) {
+            this.navContactBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.open();
+            });
+        }
         if (this.floatingBtn) {
             this.floatingBtn.addEventListener('click', () => this.open());
         }
@@ -330,12 +335,7 @@ class Navigation {
     }
 
     setupNavContact() {
-        if (this.navContactBtn) {
-            this.navContactBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById('contactBtn').click();
-            });
-        }
+        // Contact button is now handled by ContactModal
     }
 
     setupTouchSwipe() {
@@ -435,6 +435,17 @@ document.addEventListener('DOMContentLoaded', () => {
     new PriceModal();
     initCustomCursor();
     initVariantImages();
+    
+    // Handle "My Works" button click
+    const myWorksBtn = document.getElementById('myWorksBtn');
+    if (myWorksBtn) {
+        myWorksBtn.addEventListener('click', () => {
+            const portfolioSection = document.getElementById('portfolio');
+            if (portfolioSection) {
+                portfolioSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
 });
 
 // Установка фоновых изображений для карточек с примерами работ
