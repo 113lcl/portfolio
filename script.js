@@ -122,6 +122,14 @@ class ParticleCanvas {
             this.createParticles();
         });
 
+        // Обработчик изменения ориентации для мобильных устройств
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.resize();
+                this.createParticles();
+            }, 100);
+        });
+
         // Только десктоп может взаимодействовать с курсором
         if (!this.isMobile) {
             window.addEventListener('mousemove', (e) => {

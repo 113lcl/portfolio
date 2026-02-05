@@ -1082,3 +1082,238 @@ body {
         font-size: 1rem;
     }
 }
+
+/* Оптимизация для горизонтальной ориентации мобильных устройств */
+@media (orientation: landscape) and (max-height: 600px) {
+    .hero {
+        height: auto;
+        min-height: auto;
+        padding: 2rem 0;
+    }
+
+    .hero-content {
+        margin-top: -1rem;
+    }
+
+    .hero-greeting {
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .hero-title {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-tech {
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .tech-tag {
+        padding: 0.3rem 0.75rem;
+        font-size: 0.7rem;
+    }
+
+    .hero-description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        padding: 0.75rem 2rem;
+        font-size: 0.95rem;
+    }
+
+    .workflow-section {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .workflow-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .workflow-steps {
+        gap: 0.5rem;
+    }
+
+    .workflow-step {
+        min-width: 80px;
+    }
+
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .step-label {
+        font-size: 0.7rem;
+    }
+
+    .workflow-arrow {
+        font-size: 1.2rem;
+    }
+
+    .scroll-indicator {
+        bottom: 0.5rem;
+    }
+
+    .scroll-dot {
+        width: 4px;
+        height: 4px;
+    }
+}
+
+/* Оптимизация для iPhone в горизонтальной ориентации */
+@media (orientation: landscape) and (max-height: 500px) {
+    .navbar {
+        padding: 0.25rem 0;
+    }
+
+    .nav-link {
+        font-size: 0.65rem;
+        padding: 0.5rem 0.15rem;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .btn-primary {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .workflow-section {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+    }
+
+    .workflow-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+    }
+}
+
+/* Оптимизация для планшетов (iPad) */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .hero-content {
+        margin-top: -2rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+    }
+
+    .hero-subtitle {
+        font-size: 1.15rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-tech {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 500px;
+    }
+
+    .tech-tag {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        max-width: 550px;
+    }
+
+    .workflow-section {
+        margin-top: 3rem;
+        padding-top: 3rem;
+    }
+
+    .workflow-title {
+        font-size: 1.4rem;
+    }
+
+    .workflow-steps {
+        gap: 1.5rem;
+    }
+
+    .step-label {
+        font-size: 0.9rem;
+    }
+}
+
+/* Оптимизация для малых экранов (мобильные не в ландшафте) */
+@media (orientation: portrait) and (max-width: 480px) {
+    .hero {
+        padding: 2rem 0;
+    }
+
+    .hero-content {
+        margin-top: -2rem;
+    }
+
+    .workflow-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .scroll-indicator {
+        bottom: 2rem;
+    }
+}
+
+/* Оптимизация для экранов высокой четкости с выемкой (notch) */
+@supports (padding: max(0px)) {
+    body {
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .floating-contact-btn {
+        bottom: calc(2rem + env(safe-area-inset-bottom));
+        right: calc(2rem + env(safe-area-inset-right));
+    }
+}
+
+/* Оптимизация для очень маленьких экранов */
+@media (max-height: 600px) {
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-content {
+        margin-top: 0;
+    }
+}
