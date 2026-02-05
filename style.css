@@ -148,6 +148,8 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    will-change: contents;
+    image-rendering: crisp-edges;
 }
 
 /* Навигация */
@@ -636,6 +638,10 @@ body {
 
     .variant-preview {
         height: 100%;
+    }
+
+    .variant-info {
+        justify-content: flex-end;
     }
 
     .variant-info h3 {

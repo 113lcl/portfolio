@@ -5,7 +5,8 @@ class ParticleCanvas {
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
         this.mouse = { x: null, y: null, radius: 150 };
-        this.particleCount = 100;
+        this.isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.particleCount = this.isMobile ? 40 : 100;
         
         this.init();
         this.animate();
@@ -65,8 +66,8 @@ class ParticleCanvas {
                 particle.speedY *= -1;
             }
             
-            // Взаимодействие с курсором
-            if (this.mouse.x !== null && this.mouse.y !== null) {
+            // Взаимодействие с курсором (только на десктопе)
+            if (!this.isMobile && this.mouse.x !== null && this.mouse.y !== null) {
                 const dx = this.mouse.x - particle.x;
                 const dy = this.mouse.y - particle.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
@@ -84,7 +85,10 @@ class ParticleCanvas {
             }
         });
         
-        this.connectParticles();
+        // Рисуем связи между частицами (только на десктопе для лучшей производительности)
+        if (!this.isMobile) {
+            this.connectParticles();
+        }
     }
 
     connectParticles() {
@@ -118,15 +122,18 @@ class ParticleCanvas {
             this.createParticles();
         });
 
-        window.addEventListener('mousemove', (e) => {
-            this.mouse.x = e.x;
-            this.mouse.y = e.y;
-        });
+        // Только десктоп может взаимодействовать с курсором
+        if (!this.isMobile) {
+            window.addEventListener('mousemove', (e) => {
+                this.mouse.x = e.x;
+                this.mouse.y = e.y;
+            });
 
-        window.addEventListener('mouseout', () => {
-            this.mouse.x = null;
-            this.mouse.y = null;
-        });
+            window.addEventListener('mouseout', () => {
+                this.mouse.x = null;
+                this.mouse.y = null;
+            });
+        }
     }
 }
 
