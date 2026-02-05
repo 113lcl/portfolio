@@ -325,6 +325,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 270px;
+    text-decoration: none;
+    color: inherit;
 }
 
 
@@ -387,6 +389,86 @@ body {
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 600;
+}
+
+/* Стили для карточек с примерами работ (второй ряд) */
+.variant[data-image] {
+    position: relative;
+}
+
+/* Фоновое изображение на всю карточку - показывается при hover */
+.variant[data-image]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+
+.variant[data-image]:hover::before {
+    opacity: 1;
+}
+
+/* Preview для карточек с изображениями */
+.variant[data-image] .variant-preview {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+/* Размытый фон в preview по умолчанию */
+.variant[data-image] .variant-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(15px);
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.variant[data-image]:hover .variant-preview {
+    opacity: 0;
+}
+
+/* SVG иконка */
+.variant[data-image] .preview-placeholder {
+    position: relative;
+    z-index: 3;
+}
+
+.variant[data-image] .preview-placeholder svg {
+    transition: all 0.5s ease;
+}
+
+.variant[data-image]:hover .preview-placeholder svg {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Текстовая часть */
+.variant[data-image] .variant-info {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.variant[data-image]:hover .variant-info {
+    transform: translateY(100%);
 }
 
 /* Модальное окно */

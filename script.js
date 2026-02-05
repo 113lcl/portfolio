@@ -188,7 +188,7 @@ class PriceModal {
         if (this.portfolio) {
             this.portfolio.addEventListener('click', (e) => {
                 const card = e.target.closest('.variant');
-                if (!card) return;
+                if (!card || card.getAttribute('data-price') !== 'true') return;
                 this.open(card);
             });
         }
@@ -204,7 +204,7 @@ class PriceModal {
     }
 
     open(card) {
-        const title = card.getAttribute('data-title') || 'Пакет';
+        const title = card.getAttribute('data-title') || 'Package';
         const includes = (card.getAttribute('data-includes') || '').split('|').filter(Boolean);
 
         this.title.textContent = title;
@@ -430,7 +430,26 @@ document.addEventListener('DOMContentLoaded', () => {
     new Navigation();
     new PriceModal();
     initCustomCursor();
+    initVariantImages();
 });
+
+// Установка фоновых изображений для карточек с примерами работ
+function initVariantImages() {
+    const variantsWithImages = document.querySelectorAll('.variant[data-image]');
+    
+    variantsWithImages.forEach(variant => {
+        const imagePath = variant.getAttribute('data-image');
+        const preview = variant.querySelector('.variant-preview');
+        
+        if (imagePath && preview) {
+            // Устанавливаем фон для ::before псевдоэлемента через inline style
+            variant.style.setProperty('--bg-image', `url(${imagePath})`);
+            
+            // Устанавливаем размытый фон для preview::before
+            preview.style.setProperty('--bg-image', `url(${imagePath})`);
+        }
+    });
+}
 
 function initCustomCursor() {
     const dot = document.querySelector('.cursor-dot');
