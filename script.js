@@ -444,10 +444,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initCustomCursor();
     initVariantImages();
     
-    // Handle "My Works" button click
-    const myWorksBtn = document.getElementById('myWorksBtn');
-    if (myWorksBtn) {
-        myWorksBtn.addEventListener('click', () => {
+    // Handle "My Offers" button click
+    const myOffersBtn = document.getElementById('myOffersBtn');
+    if (myOffersBtn) {
+        myOffersBtn.addEventListener('click', () => {
             const portfolioSection = document.getElementById('portfolio');
             if (portfolioSection) {
                 portfolioSection.scrollIntoView({ behavior: 'smooth' });
