@@ -950,157 +950,184 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .navbar {
-        padding: 0.5rem 0;
-    }
-
-    .nav-menu {
-        gap: 0.5rem;
-    }
-
-    .nav-link {
-        font-size: 0.75rem;
-        padding: 0.5rem 0.25rem;
-    }
-
-    .nav-container {
-        padding: 0 0.75rem;
-    }
-
-    .container {
-        padding: 0 1rem;
-    }
-
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .btn-primary {
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-        width: 100%;
-    }
-
+/* Адаптивность */
+@media (max-width: 1024px) {
     .portfolio {
-        padding: 2.5rem 0;
+        padding: 3rem 0;
     }
 
     .section-title {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-        margin-top: 0.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
     }
 
     .portfolio-content {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-        padding: 0 0.75rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        scroll-snap-type: y mandatory;
+    }
+
+    .navbar {
+        padding: 0.75rem 0;
+    }
+
+    .nav-menu {
+        gap: 1rem;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.75rem 0.25rem;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    .hero {
+        height: 100vh;
+        min-height: 100vh;
+    }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .portfolio {
+        padding: 3rem 0;
+    }
+
+    .section-title {
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+    }
+
+    .portfolio-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 1rem;
     }
 
     .portfolio-row {
         padding: 1rem 1rem 2.25rem;
     }
 
-    .variant-preview svg {
-        width: 60px;
-        height: 60px;
-    }
-
-    .variant-info {
-        padding: 1rem;
-    }
-
-    .variant-info h3 {
-        font-size: 0.875rem;
-        margin-bottom: 0.25rem;
-    }
-
-    .variant-info p {
-        font-size: 0.7rem;
-        line-height: 1.3;
-    }
-
     .project {
-        height: 50vh;
-        padding: 1rem;
+        flex: 0 0 auto;
+        height: 55vh;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(139, 133, 99, 0.15);
+        margin-bottom: 0;
+        padding: 1.5rem;
+    }
+
+    .project:last-child {
+        border-bottom: none;
     }
 
     .project-variants {
-        gap: 0.75rem;
+        gap: 1rem;
     }
 
-    .modal-content {
-        padding: 1.5rem;
-        width: 95%;
-    }
-
-    .modal-content h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .contact-item {
-        padding: 1rem;
-        font-size: 0.95rem;
-    }
-
-    .contact-item span {
-        font-size: 1rem;
+    .btn-primary {
+        width: 100%;
+        padding: 1rem 2rem;
     }
 }
 
-/* Оптимизация для горизонтальной ориентации мобильных устройств */
-@media (orientation: landscape) and (max-height: 600px) {
+/* Touch оптимизация */
+@media (hover: none) and (pointer: coarse) {
+    .variant:hover {
+        transform: none;
+    }
+    
+    .variant:active {
+        transform: scale(0.98);
+    }
+    
+    .btn-primary:hover {
+        transform: none;
+    }
+    
+    .btn-primary:active {
+        transform: scale(0.97);
+    }
+}
+
+/* ========== IPHONE ПОРТРЕТНЫЙ РЕЖИМ ========== */
+/* Маленькие iPhone (SE, 12/13 mini) */
+@media (max-width: 390px) and (orientation: portrait) {
+    .navbar {
+        padding: 0.4rem 0;
+    }
+
+    .nav-menu {
+        gap: 0.3rem;
+    }
+
+    .nav-link {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.15rem;
+    }
+
+    .container {
+        padding: 0 0.75rem;
+    }
+
     .hero {
-        height: auto;
-        min-height: auto;
-        padding: 2rem 0;
+        height: 100vh;
+        padding: 1rem 0;
     }
 
     .hero-content {
-        margin-top: -1rem;
+        margin-top: -1.5rem;
     }
 
     .hero-greeting {
-        font-size: 0.9rem;
-        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
     }
 
     .hero-title {
-        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        font-size: 1.8rem;
         margin-bottom: 0.5rem;
     }
 
     .hero-subtitle {
-        font-size: 0.8rem;
-        margin-bottom: 0.75rem;
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
     }
 
     .hero-tech {
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+        margin-bottom: 1rem;
     }
 
     .tech-tag {
-        padding: 0.3rem 0.75rem;
-        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.6rem;
     }
 
     .hero-description {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         line-height: 1.5;
         margin-bottom: 1rem;
     }
 
     .btn-primary {
-        padding: 0.75rem 2rem;
-        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
     }
 
     .workflow-section {
@@ -1109,161 +1136,608 @@ body {
     }
 
     .workflow-title {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
     }
 
     .workflow-steps {
-        gap: 0.5rem;
+        gap: 0.3rem;
+        flex-wrap: wrap;
     }
 
     .workflow-step {
-        min-width: 80px;
+        min-width: 70px;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .step-label {
+        font-size: 0.6rem;
+    }
+
+    .workflow-arrow {
+        font-size: 1rem;
+    }
+
+    .portfolio {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+
+    .portfolio-content {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .portfolio-row {
+        padding: 0.75rem 0.5rem 1.5rem;
+        gap: 0.5rem;
+    }
+
+    .scroll-indicator {
+        bottom: 1.5rem;
+    }
+
+    .scroll-dot {
+        width: 3px;
+        height: 3px;
+    }
+
+    .floating-contact-btn {
+        width: 48px;
+        height: 48px;
+        bottom: 1.5rem;
+        right: 1rem;
+    }
+
+    .floating-contact-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Обычные iPhone (12/13/14/15 normal) */
+@media (min-width: 391px) and (max-width: 430px) and (orientation: portrait) {
+    .navbar {
+        padding: 0.5rem 0;
+    }
+
+    .nav-menu {
+        gap: 0.4rem;
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+        padding: 0.45rem 0.2rem;
+    }
+
+    .container {
+        padding: 0 0.85rem;
+    }
+
+    .hero-content {
+        margin-top: -1.5rem;
+    }
+
+    .hero-greeting {
+        font-size: 0.8rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-tech {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .tech-tag {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.65rem;
+    }
+
+    .hero-description {
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+    }
+
+    .btn-primary {
+        padding: 0.65rem 1.4rem;
+        font-size: 0.85rem;
+    }
+
+    .workflow-section {
+        margin-top: 1.2rem;
+        padding-top: 1.2rem;
+    }
+
+    .workflow-title {
+        font-size: 1.05rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .workflow-steps {
+        gap: 0.4rem;
+    }
+
+    .workflow-step {
+        min-width: 75px;
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+    }
+
+    .portfolio {
+        padding: 2.5rem 0;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .portfolio-content {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        padding: 0 0.6rem;
+    }
+
+    .portfolio-row {
+        padding: 0.85rem 0.6rem 1.8rem;
+        gap: 0.6rem;
+    }
+
+    .variant-preview svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .variant-info {
+        padding: 0.8rem;
+    }
+
+    .variant-info h3 {
+        font-size: 0.8rem;
+    }
+
+    .variant-info p {
+        font-size: 0.65rem;
+    }
+
+    .tech-list {
+        font-size: 0.65rem;
+    }
+}
+
+/* Большие iPhone (Max, Plus) */
+@media (min-width: 431px) and (max-width: 540px) and (orientation: portrait) {
+    .navbar {
+        padding: 0.55rem 0;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-content {
+        margin-top: -2rem;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .hero-tech {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .tech-tag {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.7rem;
+    }
+
+    .hero-description {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        margin-bottom: 1.3rem;
+    }
+
+    .btn-primary {
+        padding: 0.7rem 1.6rem;
+        font-size: 0.9rem;
+    }
+
+    .workflow-section {
+        margin-top: 1.3rem;
+        padding-top: 1.3rem;
+    }
+
+    .workflow-title {
+        font-size: 1.15rem;
+        margin-bottom: 0.95rem;
     }
 
     .step-number {
         width: 35px;
         height: 35px;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .step-label {
         font-size: 0.7rem;
     }
 
-    .workflow-arrow {
-        font-size: 1.2rem;
+    .portfolio {
+        padding: 3rem 0;
     }
 
-    .scroll-indicator {
-        bottom: 0.5rem;
+    .section-title {
+        font-size: 1.4rem;
+        margin-bottom: 1.3rem;
     }
 
-    .scroll-dot {
-        width: 4px;
-        height: 4px;
+    .portfolio-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 0 0.75rem;
+    }
+
+    .portfolio-row {
+        padding: 1rem 0.75rem 2rem;
+        gap: 0.75rem;
+    }
+
+    .variant-preview svg {
+        width: 55px;
+        height: 55px;
+    }
+
+    .variant-info {
+        padding: 0.9rem;
+    }
+
+    .variant-info h3 {
+        font-size: 0.85rem;
+    }
+
+    .variant-info p {
+        font-size: 0.7rem;
     }
 }
 
-/* Оптимизация для iPhone в горизонтальной ориентации */
-@media (orientation: landscape) and (max-height: 500px) {
+/* ========== IPHONE ГОРИЗОНТАЛЬНЫЙ РЕЖИМ ========== */
+@media (orientation: landscape) and (max-width: 540px) {
     .navbar {
-        padding: 0.25rem 0;
+        padding: 0.3rem 0;
     }
 
     .nav-link {
         font-size: 0.65rem;
-        padding: 0.5rem 0.15rem;
+        padding: 0.4rem 0.15rem;
+    }
+
+    .hero {
+        height: auto;
+        min-height: auto;
+        padding: 1rem 0;
+    }
+
+    .hero-content {
+        margin-top: 0;
+    }
+
+    .hero-greeting {
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
     }
 
     .hero-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.3rem;
     }
 
     .hero-subtitle {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
         margin-bottom: 0.5rem;
     }
 
+    .hero-tech {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.35rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .tech-tag {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.55rem;
+    }
+
     .hero-description {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         line-height: 1.4;
+        margin-bottom: 0.75rem;
     }
 
     .btn-primary {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
     }
 
     .workflow-section {
         margin-top: 0.5rem;
         padding-top: 0.5rem;
+        display: none;
     }
 
-    .workflow-title {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
+    .scroll-indicator {
+        display: none;
     }
 
-    .step-number {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
+    .floating-contact-btn {
+        width: 44px;
+        height: 44px;
+        bottom: 1rem;
+        right: 0.75rem;
     }
 
-    .step-label {
-        font-size: 0.65rem;
+    .floating-contact-btn svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
-/* Оптимизация для планшетов (iPad) */
-@media (min-width: 600px) and (max-width: 1024px) {
+/* ========== IPAD ПОРТРЕТНЫЙ РЕЖИМ ========== */
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
     .hero-content {
-        margin-top: -2rem;
+        margin-top: -1.5rem;
+    }
+
+    .hero-greeting {
+        font-size: 1rem;
     }
 
     .hero-title {
-        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-size: 3rem;
+        margin-bottom: 1rem;
     }
 
     .hero-subtitle {
-        font-size: 1.15rem;
+        font-size: 1rem;
         margin-bottom: 1.5rem;
     }
 
     .hero-tech {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        max-width: 500px;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+        max-width: 450px;
     }
 
     .tech-tag {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 
     .hero-description {
-        font-size: 1rem;
+        font-size: 0.95rem;
         line-height: 1.7;
         margin-bottom: 2rem;
-        max-width: 550px;
+    }
+
+    .btn-primary {
+        padding: 0.85rem 2.2rem;
+        font-size: 1rem;
     }
 
     .workflow-section {
-        margin-top: 3rem;
-        padding-top: 3rem;
+        margin-top: 2.5rem;
+        padding-top: 2.5rem;
     }
 
     .workflow-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
     }
 
     .workflow-steps {
-        gap: 1.5rem;
+        gap: 1.2rem;
+    }
+
+    .workflow-step {
+        min-width: 90px;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 
     .step-label {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .workflow-arrow {
+        font-size: 1.3rem;
+    }
+
+    .portfolio {
+        padding: 3.5rem 0;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .portfolio-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+        padding: 0 1.2rem;
+    }
+
+    .portfolio-row {
+        padding: 1.2rem 1.2rem 2.5rem;
+        gap: 1.2rem;
+    }
+
+    .variant-preview svg {
+        width: 65px;
+        height: 65px;
+    }
+
+    .variant-info {
+        padding: 1rem;
+    }
+
+    .variant-info h3 {
+        font-size: 0.95rem;
+    }
+
+    .variant-info p {
+        font-size: 0.8rem;
     }
 }
 
-/* Оптимизация для малых экранов (мобильные не в ландшафте) */
-@media (orientation: portrait) and (max-width: 480px) {
+/* ========== IPAD ГОРИЗОНТАЛЬНЫЙ РЕЖИМ (Landscape) ========== */
+@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) {
     .hero {
+        height: auto;
+        min-height: 80vh;
         padding: 2rem 0;
     }
 
     .hero-content {
-        margin-top: -2rem;
+        margin-top: -1rem;
+    }
+
+    .hero-title {
+        font-size: 2.8rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-tech {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.9rem;
+        margin-bottom: 1.2rem;
+        max-width: 600px;
+    }
+
+    .tech-tag {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+        padding: 0.85rem 2.2rem;
+        font-size: 1rem;
     }
 
     .workflow-section {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+    }
+
+    .workflow-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .workflow-steps {
+        gap: 1.5rem;
+        flex-wrap: nowrap;
+    }
+
+    .step-number {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+
+    .step-label {
+        font-size: 0.8rem;
+    }
+
+    .portfolio {
+        padding: 3rem 0;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .portfolio-content {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+        padding: 0 1.5rem;
+    }
+
+    .portfolio-row {
+        padding: 1.2rem 1.5rem 2rem;
+        gap: 1.2rem;
     }
 
     .scroll-indicator {
-        bottom: 2rem;
+        bottom: 2.5rem;
+    }
+}
+
+/* ========== ОЧЕНЬ БОЛЬШИЕ IPAD (12.9") ========== */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .portfolio-content {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.3rem;
+        padding: 0 1.5rem;
+    }
+
+    .portfolio-row {
+        padding: 1.3rem 1.5rem 2.5rem;
+        gap: 1.3rem;
     }
 }
 
