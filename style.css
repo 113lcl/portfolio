@@ -13,6 +13,11 @@
     --text-primary: #e5e7eb;
     --text-secondary: #9ca3af;
     --text-muted: #6b7280;
+    
+    /* Адаптивные размеры */
+    --spacing: clamp(0.5rem, 2vw, 1.5rem);
+    --title-size: clamp(2rem, 7vw, 5rem);
+    --subtitle-size: clamp(1rem, 3vw, 1.5rem);
 }
 
 body {
@@ -25,6 +30,10 @@ body {
     overflow-y: scroll;
     height: 100vh;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -87,12 +96,12 @@ body {
 
 .portfolio-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 1.5em;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(0.75rem, 2vw, 1.5em);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(139, 133, 99, 0.2);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
+    border-radius: clamp(0.75rem, 2vw, 1.25rem);
+    padding: clamp(0.75rem, 3vw, 1.5rem);
     backdrop-filter: blur(6px);
     position: relative;
 }
@@ -148,6 +157,8 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    will-change: contents;
+}
     will-change: contents;
     image-rendering: crisp-edges;
 }
@@ -797,5 +808,111 @@ body {
 
     .contact-item span {
         font-size: 1rem;
+    }
+}
+
+/* Touch оптимизация */
+@media (hover: none) and (pointer: coarse) {
+    .variant:hover {
+        transform: none;
+    }
+    
+    .variant:active {
+        transform: scale(0.98);
+    }
+    
+    .btn-primary:hover {
+        transform: none;
+    }
+    
+    .btn-primary:active {
+        transform: scale(0.97);
+    }
+
+    /* Расширенные области клика для сенсорных экранов */
+    .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-primary {
+        min-height: 48px;
+    }
+
+    .contact-item {
+        min-height: 48px;
+    }
+}
+
+/* Планшеты (1024px+) */
+@media (min-width: 1024px) {
+    .portfolio-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .variant {
+        height: 270px;
+    }
+}
+
+/* Мобильные устройства улучшенная адаптация */
+@media (max-width: 640px) {
+    html, body {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .hero-title {
+        font-size: var(--title-size);
+    }
+
+    .portfolio-content {
+        padding: 0 var(--spacing);
+        gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .portfolio-row {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .variant {
+        height: auto;
+        aspect-ratio: 1 / 1.2;
+    }
+
+    .variant-info {
+        justify-content: flex-end;
+    }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 380px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .portfolio-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .variant {
+        aspect-ratio: 1 / 1.3;
+    }
+
+    .variant-info h3 {
+        font-size: 0.7rem;
+    }
+
+    .variant-info p {
+        font-size: 0.6rem;
+    }
+
+    .tech-list {
+        font-size: 0.55rem;
+        margin-top: 0.4rem;
     }
 }
