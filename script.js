@@ -1,16 +1,61 @@
-// Интерактивные частицы на canvas
+function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function getFocusableElements(container) {
+    if (!container) return [];
+    const selectors = [
+        'a[href]',
+        'area[href]',
+        'button:not([disabled])',
+        'input:not([disabled]):not([type="hidden"])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])',
+        '[contenteditable="true"]'
+    ];
+    return Array.from(container.querySelectorAll(selectors.join(',')))
+        .filter(el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length));
+}
+
+function trapFocusIn(container, e) {
+    if (e.key !== 'Tab') return;
+    const focusables = getFocusableElements(container);
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+
+    if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+    } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+    }
+}
+
+// Interactive particles on canvas
 class ParticleCanvas {
     constructor() {
         this.canvas = document.getElementById('particles');
+        if (!this.canvas) return;
         this.ctx = this.canvas.getContext('2d');
+        if (!this.ctx) return;
         this.particles = [];
         this.mouse = { x: null, y: null, radius: 150 };
         this.isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.particleCount = this.isMobile ? 40 : 100;
+        this.dpr = window.devicePixelRatio || 1;
+        this.width = 0;
+        this.height = 0;
+        this.isRunning = false;
+        this.rafId = null;
         
         this.init();
-        this.animate();
         this.setupEventListeners();
+        this.start();
     }
 
     init() {
@@ -19,16 +64,28 @@ class ParticleCanvas {
     }
 
     resize() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.dpr = window.devicePixelRatio || 1;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+
+        // Set display size (CSS pixels)
+        this.canvas.style.width = `${this.width}px`;
+        this.canvas.style.height = `${this.height}px`;
+
+        // Set actual pixel buffer size
+        this.canvas.width = Math.floor(this.width * this.dpr);
+        this.canvas.height = Math.floor(this.height * this.dpr);
+
+        // Draw in CSS pixels, scale for DPR
+        this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     }
 
     createParticles() {
         this.particles = [];
         for (let i = 0; i < this.particleCount; i++) {
             this.particles.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * this.canvas.height,
+                x: Math.random() * this.width,
+                y: Math.random() * this.height,
                 size: Math.random() * 2 + 1,
                 speedX: (Math.random() - 0.5) * 0.5,
                 speedY: (Math.random() - 0.5) * 0.5,
@@ -45,32 +102,33 @@ class ParticleCanvas {
     }
 
     drawParticles() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.width, this.height);
         
         this.particles.forEach(particle => {
-            // Рисуем частицу
+            // Draw particle
             this.ctx.fillStyle = 'rgba(139, 133, 99, 0.5)';
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
             this.ctx.fill();
             
-            // Движение частиц
+            // Particle movement
             particle.x += particle.speedX;
             particle.y += particle.speedY;
             
-            // Границы экрана
-            if (particle.x < 0 || particle.x > this.canvas.width) {
+            // Screen bounds
+            if (particle.x < 0 || particle.x > this.width) {
                 particle.speedX *= -1;
             }
-            if (particle.y < 0 || particle.y > this.canvas.height) {
+            if (particle.y < 0 || particle.y > this.height) {
                 particle.speedY *= -1;
             }
             
-            // Взаимодействие с курсором (только на десктопе)
+            // Cursor interaction (desktop only)
             if (!this.isMobile && this.mouse.x !== null && this.mouse.y !== null) {
                 const dx = this.mouse.x - particle.x;
                 const dy = this.mouse.y - particle.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
+                if (!distance) return;
                 const forceDirectionX = dx / distance;
                 const forceDirectionY = dy / distance;
                 const maxDistance = this.mouse.radius;
@@ -85,7 +143,7 @@ class ParticleCanvas {
             }
         });
         
-        // Рисуем связи между частицами (только на десктопе для лучшей производительности)
+        // Draw connections between particles (desktop only)
         if (!this.isMobile) {
             this.connectParticles();
         }
@@ -112,8 +170,9 @@ class ParticleCanvas {
     }
 
     animate() {
+        if (!this.isRunning) return;
         this.drawParticles();
-        requestAnimationFrame(() => this.animate());
+        this.rafId = requestAnimationFrame(() => this.animate());
     }
 
     setupEventListeners() {
@@ -122,7 +181,7 @@ class ParticleCanvas {
             this.createParticles();
         });
 
-        // Обработчик изменения ориентации для мобильных устройств
+        // Orientation change handler for mobile devices
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
                 this.resize();
@@ -130,7 +189,7 @@ class ParticleCanvas {
             }, 100);
         });
 
-        // Только десктоп может взаимодействовать с курсором
+        // Only desktop can interact with cursor
         if (!this.isMobile) {
             window.addEventListener('mousemove', (e) => {
                 this.mouse.x = e.x;
@@ -142,10 +201,32 @@ class ParticleCanvas {
                 this.mouse.y = null;
             });
         }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.stop();
+            } else {
+                this.start();
+            }
+        });
+    }
+
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.animate();
+    }
+
+    stop() {
+        this.isRunning = false;
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+        }
     }
 }
 
-// Модальное окно контактов
+// Contact modal
 class ContactModal {
     constructor() {
         this.modal = document.getElementById('contactModal');
@@ -153,6 +234,8 @@ class ContactModal {
         this.floatingBtn = document.getElementById('floatingContactBtn');
         this.closeBtn = document.getElementById('closeModal');
         this.overlay = this.modal.querySelector('.modal-overlay');
+        this.dialog = this.modal.querySelector('.modal-content');
+        this.previouslyFocused = null;
         
         this.setupEventListeners();
     }
@@ -174,21 +257,31 @@ class ContactModal {
             if (e.key === 'Escape' && this.modal.classList.contains('active')) {
                 this.close();
             }
+            if (this.modal.classList.contains('active')) {
+                trapFocusIn(this.dialog, e);
+            }
         });
     }
 
     open() {
+        this.previouslyFocused = document.activeElement;
         this.modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        this.modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        (this.closeBtn || this.dialog).focus?.();
     }
 
     close() {
         this.modal.classList.remove('active');
-        document.body.style.overflow = '';
+        this.modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (this.previouslyFocused && this.previouslyFocused.focus) {
+            this.previouslyFocused.focus();
+        }
     }
 }
 
-// Модальное окно прайса
+// Price modal
 class PriceModal {
     constructor() {
         this.modal = document.getElementById('priceModal');
@@ -196,7 +289,9 @@ class PriceModal {
         this.list = document.getElementById('priceList');
         this.closeBtn = document.getElementById('closePriceModal');
         this.overlay = this.modal.querySelector('.modal-overlay');
+        this.dialog = this.modal.querySelector('.modal-content');
         this.portfolio = document.querySelector('.portfolio-content');
+        this.previouslyFocused = null;
 
         this.setupEventListeners();
     }
@@ -208,6 +303,14 @@ class PriceModal {
                 if (!card || card.getAttribute('data-price') !== 'true') return;
                 this.open(card);
             });
+
+            this.portfolio.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                const card = e.target.closest('.variant');
+                if (!card || card.getAttribute('data-price') !== 'true') return;
+                e.preventDefault();
+                this.open(card);
+            });
         }
 
         this.closeBtn.addEventListener('click', () => this.close());
@@ -217,10 +320,14 @@ class PriceModal {
             if (e.key === 'Escape' && this.modal.classList.contains('active')) {
                 this.close();
             }
+            if (this.modal.classList.contains('active')) {
+                trapFocusIn(this.dialog, e);
+            }
         });
     }
 
     open(card) {
+        this.previouslyFocused = document.activeElement;
         const title = card.getAttribute('data-title') || 'Package';
         const includes = (card.getAttribute('data-includes') || '').split('|').filter(Boolean);
 
@@ -228,22 +335,35 @@ class PriceModal {
         this.list.innerHTML = includes.map(item => `<li>${item}</li>`).join('');
 
         this.modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        this.modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        (this.closeBtn || this.dialog).focus?.();
     }
 
     close() {
         this.modal.classList.remove('active');
-        document.body.style.overflow = '';
+        this.modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (this.previouslyFocused && this.previouslyFocused.focus) {
+            this.previouslyFocused.focus();
+        }
     }
 }
 
-// Плавная прокрутка и появление элементов
+// Smooth reveal animations
 class ScrollAnimation {
     constructor() {
+        // Disable card reveal on mobile where rows scroll horizontally
+        this.isMobileLayout = window.matchMedia('(max-width: 768px)').matches;
         this.observeElements();
     }
 
     observeElements() {
+        if (this.isMobileLayout) {
+            // On mobile: cards are immediately visible, no reveal-on-scroll
+            return;
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -256,7 +376,7 @@ class ScrollAnimation {
             rootMargin: '0px 0px -50px 0px'
         });
 
-        // Анимация для элементов портфолио
+        // Portfolio card reveal
         document.querySelectorAll('.variant').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
@@ -266,7 +386,7 @@ class ScrollAnimation {
     }
 }
 
-// Навигация
+// Navigation
 class Navigation {
     constructor() {
         this.navbar = document.getElementById('navbar');
@@ -289,7 +409,7 @@ class Navigation {
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
             
-            // Показываем навигацию при прокрутке вниз
+            // Show navigation after scrolling down
             if (currentScroll > 300) {
                 this.navbar.classList.add('visible');
             } else {
@@ -297,9 +417,9 @@ class Navigation {
             }
             
             lastScroll = currentScroll;
-        });
+        }, { passive: true });
 
-        // Плавная прокрутка к секциям
+        // Smooth scroll to sections
         this.navLinks.forEach(link => {
             if (link.id !== 'navContactBtn') {
                 link.addEventListener('click', (e) => {
@@ -343,41 +463,15 @@ class Navigation {
     }
 
     setupNavContact() {
-        // Contact button is now handled by ContactModal
+        // Contact button is handled by ContactModal
     }
 
     setupTouchSwipe() {
-        // Поддержка свайпов для мобильных устройств
-        document.addEventListener('touchstart', (e) => {
-            this.touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            this.touchEndY = e.changedTouches[0].clientY;
-            this.handleSwipe();
-        }, { passive: true });
+        // Touch swipe navigation disabled — free scroll on mobile/tablets
     }
 
     handleSwipe() {
-        const swipeThreshold = 50;
-        const difference = this.touchStartY - this.touchEndY;
-
-        if (Math.abs(difference) < swipeThreshold) return;
-
-        const currentSection = this.getCurrentSection();
-        if (!currentSection) return;
-
-        const sections = Array.from(this.sections);
-        const currentIndex = sections.indexOf(currentSection);
-
-        // Свайп вверх - следующая секция
-        if (difference > 0 && currentIndex < sections.length - 1) {
-            this.scrollToSection(sections[currentIndex + 1]);
-        }
-        // Свайп вниз - предыдущая секция
-        else if (difference < 0 && currentIndex > 0) {
-            this.scrollToSection(sections[currentIndex - 1]);
-        }
+        // Disabled for mobile/tablets
     }
 
     getCurrentSection() {
@@ -403,6 +497,10 @@ class Navigation {
     }
 
     setupWheelNavigation() {
+        // Wheel snap desktop-only (≥1440px)
+        const isDesktop = window.matchMedia('(min-width: 1440px)').matches;
+        if (!isDesktop) return;
+
         let isSnapping = false;
 
         window.addEventListener('wheel', (e) => {
@@ -434,15 +532,23 @@ class Navigation {
 
 }
 
-// Инициализация
+// Init
 document.addEventListener('DOMContentLoaded', () => {
-    new ParticleCanvas();
+    const reduced = prefersReducedMotion();
+    if (!reduced) {
+        new ParticleCanvas();
+    }
     new ContactModal();
-    new ScrollAnimation();
+    if (!reduced) {
+        new ScrollAnimation();
+    }
     new Navigation();
     new PriceModal();
-    initCustomCursor();
+    if (!reduced) {
+        initCustomCursor();
+    }
     initVariantImages();
+    initVariantToggles();
     
     // Handle "My Offers" button click
     const myOffersBtn = document.getElementById('myOffersBtn');
@@ -450,13 +556,14 @@ document.addEventListener('DOMContentLoaded', () => {
         myOffersBtn.addEventListener('click', () => {
             const portfolioSection = document.getElementById('portfolio');
             if (portfolioSection) {
-                portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                const behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+                portfolioSection.scrollIntoView({ behavior });
             }
         });
     }
 });
 
-// Установка фоновых изображений для карточек с примерами работ
+// Set background images for example cards
 function initVariantImages() {
     const variantsWithImages = document.querySelectorAll('.variant[data-image]');
     
@@ -465,10 +572,10 @@ function initVariantImages() {
         const preview = variant.querySelector('.variant-preview');
         
         if (imagePath && preview) {
-            // Устанавливаем фон для ::before псевдоэлемента через inline style
+            // Background for ::before via CSS variable
             variant.style.setProperty('--bg-image', `url(${imagePath})`);
             
-            // Устанавливаем размытый фон для preview::before
+            // Blurred background for preview::before
             preview.style.setProperty('--bg-image', `url(${imagePath})`);
         }
     });
@@ -481,6 +588,7 @@ function initCustomCursor() {
 
     const canUse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (!canUse) return;
+    if (prefersReducedMotion()) return;
 
     let ringX = 0;
     let ringY = 0;
@@ -534,4 +642,27 @@ function initCustomCursor() {
     });
 
     animate();
+}
+
+function initVariantToggles() {
+    const toggles = document.querySelectorAll('.variant-toggle-btn');
+    
+    toggles.forEach(btn => {
+        const toggle = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const variant = btn.closest('.variant');
+            if (variant) {
+                variant.classList.toggle('show-preview');
+                btn.setAttribute('aria-pressed', variant.classList.contains('show-preview') ? 'true' : 'false');
+            }
+        };
+
+        btn.addEventListener('click', toggle);
+        btn.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            toggle(e);
+        });
+    });
 }

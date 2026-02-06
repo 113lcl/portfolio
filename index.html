@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Developer | Portfolio</title>
+    <title>Front-End Developer | Tymofii Kyrychenko</title>
+    <meta name="description" content="Portfolio of Tymofii Kyrychenko, Front-End Developer. Modern, responsive websites and web applications with clean code and great UX.">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta property="og:title" content="Front-End Developer | Tymofii Kyrychenko">
+    <meta property="og:description" content="Modern, responsive websites and web applications with clean code and great UX.">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,14 +18,14 @@
     <div class="cursor-ring" aria-hidden="true"></div>
     
     <!-- Floating Contact Button -->
-    <button class="floating-contact-btn" id="floatingContactBtn" aria-label="Contact us">
+    <button class="floating-contact-btn" id="floatingContactBtn" type="button" aria-label="Open contact details">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
     </button>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" aria-label="Primary">
         <div class="nav-container">
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">home</a></li>
@@ -30,8 +35,9 @@
         </div>
     </nav>
 
+    <main>
     <!-- Hero section -->
-    <section class="hero" id="home">
+    <section class="hero" id="home" aria-label="Intro">
         <div class="container">
             <div class="hero-content">
                 <h2 class="hero-greeting">Hi, I'm</h2>
@@ -50,7 +56,7 @@
                     Passionate about writing quality code and delivering projects that exceed expectations.
                 </p>
                 
-                <button class="btn-primary" id="myOffersBtn">My Offers</button>
+                <button class="btn-primary" id="myOffersBtn" type="button">My Offers</button>
             </div>
 
             <div class="workflow-section">
@@ -90,12 +96,12 @@
 
     <!-- Portfolio -->
     <section class="portfolio" id="portfolio">
-        <div class="section-title">Examples</div>
+        <h2 class="section-title">Examples</h2>
         <div class="portfolio-content">
             
             <div class="portfolio-row">
                     <!-- Variant 1 -->
-                    <div class="variant" data-title="Basic Card" data-includes="1 Screen Design|Responsive Layout|Contact Form|Basic SEO Setup|Domain Connection" data-price="true">
+                    <div class="variant" data-title="Basic Card" data-includes="1 Screen Design|Responsive Layout|Contact Form|Basic SEO Setup|Domain Connection" data-price="true" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="priceModal">
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -117,7 +123,7 @@
                     </div>
 
                     <!-- Variant 2 -->
-                    <div class="variant" data-title="With Gallery" data-includes="2 Pages|Product Gallery|Service Cards|Responsive Layout|Basic SEO Setup" data-price="true">
+                    <div class="variant" data-title="With Gallery" data-includes="2 Pages|Product Gallery|Service Cards|Responsive Layout|Basic SEO Setup" data-price="true" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="priceModal">
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -139,7 +145,7 @@
                     </div>
 
                     <!-- Variant 3 -->
-                    <div class="variant" data-title="With Admin Panel" data-includes="3 Pages|Gallery + Filters|Request Form|Admin Panel (Top)|Analytics Connection" data-price="true">
+                    <div class="variant" data-title="With Admin Panel" data-includes="3 Pages|Gallery + Filters|Request Form|Admin Panel (Top)|Analytics Connection" data-price="true" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="priceModal">
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -164,6 +170,12 @@
             <div class="portfolio-row">
                     <!-- Variant 1 -->
                     <a class="variant" href="https://bloom-onepage.netlify.app" target="_blank" rel="noopener noreferrer" data-title="Onepager Example" data-includes="Unique Design|Up to 6 Blocks|Animations|Request Form|Responsive" data-image="img/Screenshot_bloom.jpg">
+                        <span class="variant-toggle-btn" role="button" tabindex="0" aria-label="Toggle preview" aria-pressed="false">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -186,6 +198,12 @@
 
                     <!-- Variant 2 -->
                     <div class="variant" data-title="Onepager + gallery page" data-includes="Navigation Menu|Multi-page Structure|Gallery/Portfolio|Contact Form|Responsive" data-image="img/Screenshot_bloom.jpg">
+                        <span class="variant-toggle-btn" role="button" tabindex="0" aria-label="Toggle preview" aria-pressed="false">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -208,6 +226,12 @@
 
                     <!-- Variant 3 -->
                     <div class="variant" data-title="Onepager + gallery page + admin panel" data-includes="CMS Integration|Admin Access|Pages and Templates|Request Form|Basic Analytics" data-image="img/Screenshot_bloom.jpg">
+                        <span class="variant-toggle-btn" role="button" tabindex="0" aria-label="Toggle preview" aria-pressed="false">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
                         <div class="variant-preview">
                             <div class="preview-placeholder">
                                 <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
@@ -230,13 +254,13 @@
             </div>
 
         </div>
-    </div>
+    </section>
 
     <!-- Price modal -->
-    <div class="modal" id="priceModal">
+    <div class="modal" id="priceModal" aria-hidden="true">
         <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <button class="modal-close" id="closePriceModal">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="priceTitle">
+            <button class="modal-close" id="closePriceModal" type="button" aria-label="Close dialog">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -249,18 +273,18 @@
     </div>
 
     <!-- Contact modal -->
-    <div class="modal" id="contactModal">
+    <div class="modal" id="contactModal" aria-hidden="true">
         <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <button class="modal-close" id="closeModal">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+            <button class="modal-close" id="closeModal" type="button" aria-label="Close dialog">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
-            <h2>Contacts</h2>
+            <h2 id="contactTitle">Contacts</h2>
             <div class="contacts">
-                <a href="https://t.me/username" class="contact-item" target="_blank">
+                <a href="https://t.me/username" class="contact-item" target="_blank" rel="noopener noreferrer">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
                     </svg>
@@ -281,7 +305,8 @@
                 </a>
             </div>
         </div>
-    </section>
+    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
