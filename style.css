@@ -25,6 +25,8 @@ body {
     height: 100vh;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 body.modal-open {
@@ -53,7 +55,7 @@ body.modal-open {
     pointer-events: none;
     z-index: 2000;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
 }
 
 .cursor-dot {
@@ -64,12 +66,19 @@ body.modal-open {
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
 }
 
+.cursor-dot.is-active {
+    width: 18px;
+    height: 18px;
+    mix-blend-mode: difference;
+}
+
 .cursor-ring {
     width: 34px;
     height: 34px;
     border-radius: 50%;
     border: 1.5px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 14px rgba(255, 255, 255, 0.25);
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.2s ease; /* Removed transform transition to fix lag */
 }
 
 .cursor-ring.is-hover {
@@ -97,11 +106,11 @@ body.modal-open {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 1.5em;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-secondary);
     border: 1px solid rgba(139, 133, 99, 0.2);
     border-radius: 1.25rem;
     padding: 1.5rem;
-    backdrop-filter: blur(6px);
+    /* backdrop-filter: blur(6px); - Removed for performance */
     position: relative;
 }
 
@@ -128,15 +137,15 @@ body.modal-open {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.98);
+    /* backdrop-filter: blur(20px); - Removed for performance */
     z-index: 100;
     padding: 1rem 0;
     border-bottom: 1px solid rgba(139, 133, 99, 0.1);
     opacity: 0;
     transform: translateY(-100%);
     transition: all 0.4s ease;
-    -webkit-backdrop-filter: blur(20px);
+    /* -webkit-backdrop-filter: blur(20px); */
 }
 
 .navbar.visible {
@@ -678,7 +687,7 @@ body.modal-open {
     justify-content: center;
     z-index: 20;
     cursor: pointer;
-    backdrop-filter: blur(4px);
+    /* backdrop-filter: blur(4px); */
     transition: all 0.3s ease;
 }
 
@@ -718,8 +727,8 @@ body.modal-open {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.95);
+    /* backdrop-filter: blur(10px); */
     animation: fadeIn 0.3s ease;
 }
 

@@ -46,7 +46,8 @@ class ParticleCanvas {
         this.particles = [];
         this.mouse = { x: null, y: null, radius: 150 };
         this.isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        this.particleCount = this.isMobile ? 40 : 100;
+        // Reduced particle count for performance
+        this.particleCount = this.isMobile ? 40 : 80;
         this.dpr = window.devicePixelRatio || 1;
         this.width = 0;
         this.height = 0;
@@ -144,9 +145,11 @@ class ParticleCanvas {
         });
         
         // Draw connections between particles (desktop only)
+        /* Disabled for better performance
         if (!this.isMobile) {
             this.connectParticles();
         }
+        */
     }
 
     connectParticles() {
@@ -639,6 +642,19 @@ function initCustomCursor() {
             dot.classList.remove('is-hover');
             ring.classList.remove('is-hover');
         }
+    });
+
+    window.addEventListener('mousedown', () => {
+        dot.classList.add('is-active');
+    });
+
+    window.addEventListener('mouseup', () => {
+        dot.classList.remove('is-active');
+    });
+
+    // Fix: Reset cursor state after drag operations (e.g. text selection dragging)
+    window.addEventListener('dragend', () => {
+        dot.classList.remove('is-active');
     });
 
     animate();
